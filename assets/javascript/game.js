@@ -37,47 +37,50 @@ document.onkeyup = function()
 		// Tests if user has used up allotted guesses
 	if (guessesRemaining > 0)
 		{ 	
-			// Capture keyCode in keyPressed variable 
+		// Capture keyCode in keyPressed variable 
 		var keyPressed = event.which || event.keyCode;
+		// Convert keyCode into ASCII character and store in character
 		var character = String.fromCharCode(keyPressed);
-		console.log (character);
+		// If the character has not already been guessed, run the following
+		// lettersGuessedArray.join(" ") merges array into string
+		// .indexOf(character) tries to locate the character in the string
+		// If it does not exist, it yields -1 value
 		if (lettersGuessedArray.join(" ").indexOf(character) == -1)
 			{ 
 			guessesRemaining--;
 			if (guessesRemaining==0)
 				{
+					// Replace gameStats h1 tag with "You Lose" if guesses have run out
 					document.getElementById("gameStats").innerHTML="<h1>YOU LOSE!</h1>";
-					// document.getElementById("mainText").innerHTML="YOU LOSE!";
-					// document.write("YOU LOSE");
 				}
+			// If the user still has guesses
+			// Add the character to the end of lettersGuessedArray
 			lettersGuessedArray.push(character);
-			console.log(lettersGuessedArray);
 			}	
 
 
-
+			// Loop randVehicle.length # of times
 		for (var i = 0; i < randVehicle.length; i++) 
-			{						
+			{	
+				// Test if the character is found at all in stringArray					
 				if (character == stringArray[i])
 				{
+					// If found, replace dashedArray ith element with the real character
 					dashedArray[i]=stringArray[i];
+					// If there are no more dashes in the array, you win.
 					if (dashedArray.join(" ").indexOf("_") == -1)
 					{	
+						// Replace gameStats h1 with "You Win"
 						document.getElementById("gameStats").innerHTML="<h1>YOU WIN!</h1>";
-						// document.getElementById("mainText").innerHTML="YOU WIN!"
-						// document.write("YOU WIN")
 					}
 				}			
 		    }
-
+		    // Replaces the html on the page after each iteration
 		    document.getElementById("currentWordDisp").innerHTML = dashedArray.join(" ");
 			document.getElementById("guessRemainDisp").innerHTML = "Guesses Remaining: " + guessesRemaining;
 			document.getElementById("lettersGuessedDisp").innerHTML = "Letters Guessed: " + lettersGuessedArray;
 		} 
 		
-		// document.getElementById("gameStats").innerHTML="<h1>YOU LOSE!</h1>";
-		// else {document.getElementById("mainText").innerHTML="YOU LOSE!"}
-		// document.write("YOU LOSE")
 	}
 
 	
